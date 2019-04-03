@@ -1,0 +1,10 @@
+.DS_Store
+.travis.yml
+.history/
+coverage/
+docs/
+src/
+test/
+CNAME
+Makefile
+tsconfig.json
