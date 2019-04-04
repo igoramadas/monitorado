@@ -6,17 +6,17 @@ TYPEDOC:= ./node_modules/.bin/typedoc
 
 test:
 	tsc
-	@NODE_ENV=test $(MOCHA) --trace-warnings --exit -u tdd -R spec --timeout 4000
+	@NODE_ENV=test $(MOCHA) --trace-warnings --exit -u tdd -R spec
 
 test-cover:
 	echo TRAVIS_JOB_ID $(TRAVIS_JOB_ID)
-	@NODE_ENV=test $(ISTANBUL) cover \
-	$(MOCHAEXEC) --exit --report lcovonly -- -R spec --timeout 4000 && \
+	@NODE_ENV=test $(ISTANBUL) \
+	$(MOCHAEXEC) --exit --report lcovonly -R spec && \
 	cat ./coverage/lcov.info | $(COVERALLS) || true
 
 cover:
 	tsc
-	$(ISTANBUL) $(MOCHAEXEC) -- --exit -R spec ./test/*.js
+	$(ISTANBUL) $(MOCHAEXEC) --exit -R spec ./test/*.js
 
 docs:
 	$(TYPEDOC)
