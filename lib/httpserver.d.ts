@@ -11,10 +11,6 @@ declare class HttpServer {
     private static _instance;
     static readonly Instance: HttpServer;
     /**
-     * Returns a new fresh HTTP Server instance.
-     */
-    newInstance(): HttpServer;
-    /**
      * Default HTTP server constructor will set the default settings.
      */
     constructor();

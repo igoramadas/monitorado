@@ -22,13 +22,6 @@ class HttpServer {
     }
 
     /**
-     * Returns a new fresh HTTP Server instance.
-     */
-    newInstance(): HttpServer {
-        return new HttpServer()
-    }
-
-    /**
      * Default HTTP server constructor will set the default settings.
      */
     constructor() {
@@ -62,7 +55,7 @@ class HttpServer {
 
         let indexRoute = (req, res) => {
             if (settings.httpServer.token && !this.validateToken(req)) {
-                return res.status(401).json({error: "Access denied"})
+                return res.status(403).json({error: "Access denied"})
             }
 
             let output = new Output()
