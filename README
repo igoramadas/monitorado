@@ -1,1 +1,6 @@
 # Monitorado
+
+[![Build Status](https://img.shields.io/travis/igoramadas/monitorado.svg?style=flat-square)](https://travis-ci.org/igoramadas/monitorado)
+[![Coverage Status](https://img.shields.io/coveralls/igoramadas/monitorado.svg?style=flat-square)](https://coveralls.io/github/igoramadas/monitorado?branch=master)
+
+A simple but effective library to track app metrics.

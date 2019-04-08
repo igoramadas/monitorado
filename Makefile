@@ -25,6 +25,10 @@ docs:
 clean:
 	rm -rf ./node_modules
 
+publish:
+	tsc --removeComments
+	npm publish
+
 update:
 	ncu -u
 	npm install
