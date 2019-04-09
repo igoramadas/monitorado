@@ -258,7 +258,7 @@ export class Output {
     /**
      * Helper to get summary for last calls.
      * @counter The counter object.
-     * */
+     */
     private getLastSamples(counter: Counter) {
         if (counter) {
             try {
@@ -279,10 +279,12 @@ export class Output {
 
                 return result
             } catch (ex) {
+                /* istanbul ignore next */
                 logger.error("Monitorado.getLast", `Start time ${counter.startTime}`, ex)
             }
         }
 
+        /* istanbul ignore next */
         return {data: "Invalid metric"}
     }
 }

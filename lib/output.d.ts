@@ -31,6 +31,6 @@ export declare class Output {
     /**
      * Helper to get summary for last calls.
      * @counter The counter object.
-     * */
+     */
     private getLastSamples;
 }

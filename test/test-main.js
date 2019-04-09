@@ -45,6 +45,7 @@ describe("Metrics Main Tests", function() {
 
             let cb = function() {
                 mt.setData("counter", i)
+                mt.setData("counter2", i * 2)
                 mt.end()
             }
 
@@ -94,22 +95,42 @@ describe("Metrics Main Tests", function() {
     })
 
     it("Auto expiring counters", function(done) {
-        monitorado.start("expiredCall", {
+        let mt = monitorado.start("expiredCall", {
             expiresIn: 50
         })
 
         let callback = function() {
+            mt.end()
+
             let output = monitorado.output()
             let expired = output.expiredCall.last_1min.expired
 
             if (expired > 0) {
                 done()
             } else {
-                done("Output should have 1 expired metric for expiredCall, but has " + expired + ".")
+                done(`Output should have 1 expired metric for expiredCall, but has ${expired}.`)
             }
         }
 
         setTimeout(callback, 500)
+    })
+
+    it("Ending before counter auto expires", function(done) {
+        let mt = monitorado.start("expiredCall", {
+            expiresIn: 500
+        })
+
+        let callback = function() {
+            mt.end()
+
+            if (!mt.timeout) {
+                done()
+            } else {
+                done("The counter's 'timeout' should have been deleted.")
+            }
+        }
+
+        setTimeout(callback, 50)
     })
 
     it("Output has the previously set counter with error", function(done) {
@@ -210,6 +231,7 @@ describe("Metrics Main Tests", function() {
 
         monitorado.cleanup()
         count = monitorado.get("iteratorWithData").length
+        monitorado.cleanup()
 
         if (count > 0) {
             done("Iterator metrics should have 0 data, but has " + count + ".")
