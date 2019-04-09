@@ -1,7 +1,4 @@
 /**
- * Monitorado: Percentile
- */
-/**
  * This is a helper class to calculate percentiles. Can also be used by external modules
  * by calling "monitorado.percentile.calculate(durations, percentile)."
  */

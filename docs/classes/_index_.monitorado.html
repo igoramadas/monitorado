@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Monitorado | Expresser Metrics</title>
+	<title>Monitorado</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">Expresser Metrics</a>
+					<a href="../index.html" class="title">Monitorado</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -67,6 +67,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Monitorado&#39;s main class.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -90,13 +97,9 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-not-exported"><a href="_index_.monitorado.html#cleanuptimer" class="tsd-kind-icon">cleanup<wbr>Timer</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-not-exported"><a href="_index_.monitorado.html#httpserver" class="tsd-kind-icon">http<wbr>Server</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-not-exported"><a href="_index_.monitorado.html#percentile" class="tsd-kind-icon">percentile</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-not-exported"><a href="_index_.monitorado.html#settings" class="tsd-kind-icon">settings</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-not-exported"><a href="_index_.monitorado.html#systeminfo" class="tsd-kind-icon">system<wbr>Info</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Accessors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-static"><a href="_index_.monitorado.html#instance" class="tsd-kind-icon">Instance</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-not-exported">
@@ -123,7 +126,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/index.ts#L23">index.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/index.ts#L27">index.ts:27</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -145,9 +148,14 @@
 					<div class="tsd-signature tsd-kind-icon">cleanup<wbr>Timer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/index.ts#L52">index.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/index.ts#L55">index.ts:55</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Auto cleanup timer.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
 					<a name="httpserver" class="tsd-anchor"></a>
@@ -155,9 +163,44 @@
 					<div class="tsd-signature tsd-kind-icon">http<wbr>Server<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&quot;./httpserver&quot;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/index.ts#L50">index.ts:50</a></li>
+							<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/index.ts#L51">index.ts:51</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Exposes the HTTP server.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
+					<a name="percentile" class="tsd-anchor"></a>
+					<h3>percentile</h3>
+					<div class="tsd-signature tsd-kind-icon">percentile<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&quot;./percentile&quot;)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/index.ts#L53">index.ts:53</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Percentile calculation helper.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
+					<a name="settings" class="tsd-anchor"></a>
+					<h3>settings</h3>
+					<div class="tsd-signature tsd-kind-icon">settings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/index.ts#L59">index.ts:59</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Exposes the settings from SetMeUp module.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
 					<a name="systeminfo" class="tsd-anchor"></a>
@@ -165,29 +208,14 @@
 					<div class="tsd-signature tsd-kind-icon">system<wbr>Info<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/index.ts#L53">index.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/index.ts#L57">index.ts:57</a></li>
 						</ul>
 					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
-					<a name="instance" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagExport assignment">Export assignment</span> Instance</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> Instance<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_index_.monitorado.html" class="tsd-signature-type">Monitorado</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/index.ts#L21">index.ts:21</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="_index_.monitorado.html" class="tsd-signature-type">Monitorado</a></h4>
-						</li>
-					</ul>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Exposes current system info.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
@@ -202,13 +230,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/index.ts#L96">index.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/index.ts#L102">index.ts:102</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Clean collected metrics by removing data older than X minutes (defined on settings).
-									Please note that this runs on s schedule so you shouldn&#39;t need to call it manually, in most cases.</p>
+									<p>Clean collected metrics by removing counters older than X minutes (defined on settings).
+									Please note that this runs on a schedule so you shouldn&#39;t need to call it manually.</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -225,10 +253,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/index.ts#L63">index.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/index.ts#L69">index.ts:69</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the counters for the specified metric ID.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -254,16 +285,25 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/index.ts#L157">index.ts:157</a></li>
+									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/index.ts#L168">index.ts:168</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculate and returns the metrics output for the current counters.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/_output_.outputoptions.html" class="tsd-signature-type">OutputOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Optional output settings.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_output_.output.html" class="tsd-signature-type">Output</a></h4>
+							<p>The metrics represented as a JSON object.</p>
 						</li>
 					</ul>
 				</section>
@@ -277,12 +317,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/index.ts#L73">index.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/index.ts#L79">index.ts:79</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Starts the counter for a specific metric. The data is optional.</p>
+									<p>Starts a counter for a specific metric.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -296,12 +336,12 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/_counter_.counteroptions.html" class="tsd-signature-type">CounterOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Metric options to set a tag and expiry interval.</p>
+										<p>Optional metric options to set a tag and expiry interval.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_counter_.counter.html" class="tsd-signature-type">Counter</a></h4>
-							<p>Returns the metric object to be used later on <code>end</code>.</p>
+							<p>Returns the counter object.</p>
 						</li>
 					</ul>
 				</section>
@@ -350,10 +390,13 @@
 								<a href="_index_.monitorado.html#httpserver" class="tsd-kind-icon">http<wbr>Server</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
-								<a href="_index_.monitorado.html#systeminfo" class="tsd-kind-icon">system<wbr>Info</a>
+								<a href="_index_.monitorado.html#percentile" class="tsd-kind-icon">percentile</a>
 							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
-								<a href="_index_.monitorado.html#instance" class="tsd-kind-icon">Instance</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
+								<a href="_index_.monitorado.html#settings" class="tsd-kind-icon">settings</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
+								<a href="_index_.monitorado.html#systeminfo" class="tsd-kind-icon">system<wbr>Info</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
 								<a href="_index_.monitorado.html#cleanup" class="tsd-kind-icon">cleanup</a>
@@ -371,27 +414,6 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_index_.html#_" class="tsd-kind-icon">_</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_index_.html#jaul" class="tsd-kind-icon">jaul</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_index_.html#logger" class="tsd-kind-icon">logger</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_index_.html#metrics" class="tsd-kind-icon">metrics</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_index_.html#moment" class="tsd-kind-icon">moment</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_index_.html#setmeup" class="tsd-kind-icon">setmeup</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_index_.html#settings" class="tsd-kind-icon">settings</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

@@ -22,7 +22,7 @@ describe("Metrics Main Tests", function() {
         setmeup = require("setmeup")
         settings = setmeup.settings.monitorado
         settings.aggregatedKeys = {
-            iteratorAgg: ["iteratorWithData", "iteratorWithTag"]
+            iteratorAgg: ["iteratorWithData", "iteratorWithTag", "somethingInvalid"]
         }
     })
 
@@ -132,7 +132,7 @@ describe("Metrics Main Tests", function() {
         }
     })
 
-    it("Output all the metrics gathered on tests", function(done) {
+    it("Output all the metrics gathered on previous tests", function(done) {
         let output = monitorado.output()
 
         if (!output.iteratorWithData || !output.iteratorWithTag || !output.withError) {
@@ -144,7 +144,7 @@ describe("Metrics Main Tests", function() {
 
     it("Output the metrics gathered on tests, but only for iteratorWithData", function(done) {
         let output = monitorado.output({
-            keys: ["iteratorWithData"]
+            keys: ["iteratorWithData", "invalidKey"]
         })
 
         if (!output.iteratorWithData || output.iteratorWithTag) {
@@ -198,7 +198,7 @@ describe("Metrics Main Tests", function() {
 
         let output = monitorado.output(options)
 
-        if (!output.iteratorWithData.last_1min.last_samples || output.iteratorWithData.last_1min.last_samples.length != 3) {
+        if (!output.iteratorWithData.last_samples || output.iteratorWithData.last_samples.length != 3) {
             done("Output should have last 3 samples for iteratorWithData.")
         } else {
             done()

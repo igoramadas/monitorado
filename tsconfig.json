@@ -14,7 +14,7 @@
         "excludeExternals": true,
         "excludePrivate": true,
         "mode": "modules",
-        "name": "Expresser Metrics",
+        "name": "Monitorado",
         "out": "docs"
     }
 }

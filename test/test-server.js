@@ -24,7 +24,6 @@ describe("Metrics Main Tests", function() {
         monitorado = require("../lib/index")
         setmeup = require("setmeup")
         settings = setmeup.settings.monitorado
-
     })
 
     it("Try starting the server without a valid port", function(done) {
@@ -36,25 +35,17 @@ describe("Metrics Main Tests", function() {
         }
     })
 
-    it("Start the dedicated HTTP server", function(done) {
+    it("Start the dedicated HTTP server twice", function() {
         settings.httpServer.port = port
 
-        let started = monitorado.httpServer.start()
-        supertest = require("supertest").agent(monitorado.httpServer.expressApp)
+        monitorado.httpServer.start()
+        monitorado.httpServer.start()
 
-        if (!started) {
-            done("Error starting the Metrics HTTP server.")
-        } else {
-            done()
-        }
+        supertest = require("supertest").agent(monitorado.httpServer.expressApp)
     })
 
-    it("Try starting after server has already started", function(done) {
-        if (!monitorado.httpServer.start()) {
-            done()
-        } else {
-            done("The start() should return false if server is already running.")
-        }
+    it("Try starting after server has already started", function() {
+
     })
 
     it("Output via dedicated HTTP server", function(done) {
@@ -82,21 +73,8 @@ describe("Metrics Main Tests", function() {
         supertest.get("/").set("Authorization", "Bearer: abc").expect("Content-Type", /json/).expect(200).end(validCb)
     })
 
-    it("Kill the dedicated HTTP server", function(done) {
-        let killed = monitorado.httpServer.kill()
-
-        if (!killed) {
-            done("HTTP server was not running therefore was not killed.")
-        } else {
-            done()
-        }
-    })
-
-    it("Killing server again should return false", function(done) {
-        if (!monitorado.httpServer.kill()) {
-            done()
-        } else {
-            done("The kill() should return false if server is not running.")
-        }
+    it("Kill the dedicated HTTP server twice", function() {
+        monitorado.httpServer.kill()
+        monitorado.httpServer.kill()
     })
 })

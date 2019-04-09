@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Expresser Metrics</title>
+	<title>Monitorado</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">Expresser Metrics</a>
+					<a href="index.html" class="title">Monitorado</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -54,7 +54,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> Expresser Metrics</h1>
+			<h1> Monitorado</h1>
 		</div>
 	</div>
 </header>
@@ -62,6 +62,68 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
+				<h1 id="monitorado">Monitorado</h1>
+				<p><a href="https://travis-ci.org/igoramadas/monitorado"><img src="https://img.shields.io/travis/igoramadas/monitorado.svg?style=flat-square" alt="Build Status"></a>
+				<a href="https://coveralls.io/github/igoramadas/monitorado?branch=master"><img src="https://img.shields.io/coveralls/igoramadas/monitorado.svg?style=flat-square" alt="Coverage Status"></a></p>
+				<p>A simple but effective library to track app metrics.</p>
+				<h2 id="basic-usage">Basic usage</h2>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> monitorado = <span class="hljs-built_in">require</span>(<span class="hljs-string">"monitorado"</span>)
+
+<span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">let</span> mt = monitorado.start(<span class="hljs-string">"expensive-method"</span>)
+
+    <span class="hljs-comment">// End expensive-method metric.</span>
+    mt.end()
+
+} <span class="hljs-keyword">catch</span> (ex) {
+    <span class="hljs-comment">// End metric with error.</span>
+    mt.end(ex)
+}
+
+<span class="hljs-comment">// Get metrics output.</span>
+<span class="hljs-keyword">let</span> output = monitorado.output()</code></pre>
+				<h2 id="extra-features">Extra features</h2>
+				<pre><code class="language-javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) {
+
+    <span class="hljs-comment">// Auto expire counter after 5 seconds.</span>
+    <span class="hljs-keyword">let</span> expiringMt = monitorado.start(<span class="hljs-string">"timeout-method"</span>, {<span class="hljs-attr">expiresIn</span>: <span class="hljs-number">5000</span>})
+    <span class="hljs-keyword">await</span> myApp.externalCall()
+
+    <span class="hljs-comment">// If externalCall takes more than 5 sec, will auto expire before the .end().</span>
+    expiringMt.end()
+}
+
+<span class="hljs-comment">// Create metric with a tag.</span>
+<span class="hljs-keyword">let</span> anotherMt = monitorado.start(<span class="hljs-string">"user-method"</span>, {<span class="hljs-attr">tag</span>: <span class="hljs-string">"Users"</span>})
+<span class="hljs-keyword">let</span> result = <span class="hljs-keyword">await</span> myApp.getUserStats()
+
+<span class="hljs-comment">// Add extra data to metric, for instance a user count.</span>
+anotherMt.setData(<span class="hljs-string">"users"</span>, result.users)
+anotherMt.end()
+
+<span class="hljs-comment">// Output metrics for timeout-method only, for the last 1, 2, and 5 minutes.</span>
+<span class="hljs-keyword">let</span> timeoutOutput = monitorado.output({<span class="hljs-attr">intervals</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>], <span class="hljs-attr">keys</span>: [<span class="hljs-string">"timeout-method"</span>]})</code></pre>
+				<h2 id="built-in-http-server">Built-in HTTP server</h2>
+				<pre><code class="language-javascript"><span class="hljs-keyword">try</span> {
+    <span class="hljs-comment">// Set a custom port and base path.</span>
+    monitorado.settings.httpServer.port = <span class="hljs-number">8080</span>
+    monitorado.settings.httpServer.path = <span class="hljs-string">"/metrics"</span>
+
+    <span class="hljs-comment">// Or you can also manipulate settings directly via SetMeUp...</span>
+    <span class="hljs-keyword">const</span> setmeup = <span class="hljs-built_in">require</span>(<span class="hljs-string">"setmeup"</span>)
+    setmeup.load(<span class="hljs-string">"settings.monitorado.json"</span>)
+
+    <span class="hljs-comment">// Start the built-in HTTP server</span>
+    monitorado.httpServer.start()
+    <span class="hljs-comment">// Calling http://your-host:8080/metrics will output the metrics.</span>
+
+    <span class="hljs-comment">// You can also protect the endpoint with a token.</span>
+    monitorado.settings.httpServer.token = <span class="hljs-string">"my-custom-token"</span>
+    <span class="hljs-comment">// Now you need to pass an Authorization: Bearer XXX header.</span>
+}
+</code></pre>
+				<h2 id="api-documentation">API documentation</h2>
+				<p>You can browse the full API documentation at <a href="https://monitorado.devv.com">https://monitorado.devv.com</a>.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">

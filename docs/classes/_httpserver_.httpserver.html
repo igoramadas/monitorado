@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>HttpServer | Expresser Metrics</title>
+	<title>HttpServer | Monitorado</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">Expresser Metrics</a>
+					<a href="../index.html" class="title">Monitorado</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -101,12 +101,6 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-not-exported"><a href="_httpserver_.httpserver.html#server" class="tsd-kind-icon">server</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
-							<h3>Accessors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-static"><a href="_httpserver_.httpserver.html#instance" class="tsd-kind-icon">Instance</a></li>
-							</ul>
-						</section>
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
@@ -130,7 +124,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/httpserver.ts#L22">httpserver.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/httpserver.ts#L25">httpserver.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -151,9 +145,14 @@
 					<div class="tsd-signature tsd-kind-icon">express<wbr>App<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">express.Application</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/httpserver.ts#L39">httpserver.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/httpserver.ts#L39">httpserver.ts:39</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The Express application, in case you want to add extra routes or middlewares.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
 					<a name="server" class="tsd-anchor"></a>
@@ -161,7 +160,7 @@
 					<div class="tsd-signature tsd-kind-icon">server<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/httpserver.ts#L37">httpserver.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/httpserver.ts#L36">httpserver.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -171,42 +170,27 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
-					<a name="instance" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagExport assignment">Export assignment</span> Instance</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> Instance<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_httpserver_.httpserver.html" class="tsd-signature-type">HttpServer</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/httpserver.ts#L20">httpserver.ts:20</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="_httpserver_.httpserver.html" class="tsd-signature-type">HttpServer</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
 					<a name="kill" class="tsd-anchor"></a>
 					<h3>kill</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">kill<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">kill<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/httpserver.ts#L73">httpserver.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/httpserver.ts#L75">httpserver.ts:75</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Close the HTTP server and kill the Express app.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -214,16 +198,21 @@
 					<a name="start" class="tsd-anchor"></a>
 					<h3>start</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/httpserver.ts#L44">httpserver.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/httpserver.ts#L45">httpserver.ts:45</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create the Express application and starts a HTTP server to output metrics.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -237,12 +226,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/72779a2/src/httpserver.ts#L90">httpserver.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/igoramadas/monitorado/blob/f9af736/src/httpserver.ts#L93">httpserver.ts:93</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Check if a valid token was passed on to the request.</p>
+									<p>Check if a valid token was passed via the Authorization header.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -255,6 +244,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>True if passed token is valid, otherwise false.</p>
 						</li>
 					</ul>
 				</section>
@@ -302,9 +292,6 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
 								<a href="_httpserver_.httpserver.html#server" class="tsd-kind-icon">server</a>
 							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
-								<a href="_httpserver_.httpserver.html#instance" class="tsd-kind-icon">Instance</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
 								<a href="_httpserver_.httpserver.html#kill" class="tsd-kind-icon">kill</a>
 							</li>
@@ -318,18 +305,6 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_httpserver_.html#_" class="tsd-kind-icon">_</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_httpserver_.html#logger" class="tsd-kind-icon">logger</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_httpserver_.html#setmeup" class="tsd-kind-icon">setmeup</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_httpserver_.html#settings" class="tsd-kind-icon">settings</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

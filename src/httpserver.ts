@@ -1,13 +1,15 @@
-/**
- * Monitorado: HTTP Server
- */
+// Monitorado: httpserver.ts
 
 import {Output} from "./output"
 import express = require("express")
 
+/** @hidden */
 const _ = require("lodash")
+/** @hidden */
 const logger = require("anyhow")
+/** @hidden */
 const setmeup = require("setmeup")
+/** @hidden */
 let settings
 
 /**
@@ -17,13 +19,12 @@ let settings
  */
 class HttpServer {
     private static _instance: HttpServer = null
+    /** @hidden */
     static get Instance() {
         return this._instance || (this._instance = new this())
     }
 
-    /**
-     * Default HTTP server constructor will set the default settings.
-     */
+    /** Default HTTP server constructor will set the default settings. */
     constructor() {
         settings = setmeup.settings.monitorado
     }
@@ -31,21 +32,23 @@ class HttpServer {
     // PROPERTIES
     // --------------------------------------------------------------------------
 
-    /**
-     * The HTTP server created using Express.
-     */
+    /** The HTTP server created using Express. */
     server: any
 
+    /** The Express application, in case you want to add extra routes or middlewares. */
     expressApp: express.Application
 
-    /*
-     * Start the Express / HTTP server.
-     */
-    start(): boolean {
+    // METHODS
+    // --------------------------------------------------------------------------
+
+    /** Create the Express application and starts a HTTP server to output metrics. */
+    start(): void {
         if (this.server) {
-            logger.debug("Monitorado.HttpServer.start", "Already started, abort")
-            return false
+            logger.warn("Monitorado.HttpServer.start", "Already started")
+            return
         }
+
+        // Valid port is mandatory!
         if (!settings.httpServer.port || settings.httpServer.port < 0) {
             throw new Error("No port defined, please set the server port on the settings.")
         }
@@ -53,6 +56,7 @@ class HttpServer {
         this.expressApp = express()
         this.server = this.expressApp.listen(settings.httpServer.port)
 
+        // Set default index route, with optional auth required.
         let indexRoute = (req, res) => {
             if (settings.httpServer.token && !this.validateToken(req)) {
                 return res.status(403).json({error: "Access denied"})
@@ -61,33 +65,32 @@ class HttpServer {
             let output = new Output()
             res.json(output.json)
         }
+
         this.expressApp.get(settings.httpServer.path, indexRoute)
 
         logger.info("Monitorado.HttpServer.start", settings.httpServer.port)
-        return true
     }
 
-    /*
-     * Kill the Express / HTTP server.
-     */
-    kill(): boolean {
+    /** Close the HTTP server and kill the Express app. */
+    kill(): void {
         if (!this.server) {
-            logger.debug("Monitorado.HttpServer.kill")
-            return false
+            logger.warn("Monitorado.HttpServer.kill", "Not running")
+            return
         }
 
         this.server.close()
         this.server = null
+        this.expressApp = null
 
         logger.info("Monitorado.HttpServer.kill")
-        return true
     }
 
     /**
-     * Check if a valid token was passed on to the request.
+     * Check if a valid token was passed via the Authorization header.
      * @param req Request object from client.
+     * @returns True if passed token is valid, otherwise false.
      */
-    validateToken(req: express.Request) {
+    validateToken(req: express.Request): boolean {
         if (!req.headers || !req.headers.authorization) {
             return false
         }

@@ -1,16 +1,14 @@
-/**
- * Metric options when starting a new metric.
- */
+/** Metric options when starting a new metric. */
 export interface CounterOptions {
     /** metric should expire in these amount of milliseconds if not ended. */
     expiresIn?: number;
     /** Custom tag or text to be associated with that particular metric. */
     tag?: string;
 }
-/**
- * Represents a single metric counter with time, duratiomn and additional info.
- */
+/** Represents a single metric counter with time, duratiomn and additional info. */
 export declare class Counter {
+    /** Default Counter constructor expects a mandatory ID, and optional 'tag' and 'expiresIn' options. */
+    constructor(id: string, options?: CounterOptions);
     /** Shared ID of this counter. */
     id: string;
     /** The start time (unix timestamp ion milliseconds). */
@@ -29,10 +27,8 @@ export declare class Counter {
     error?: any;
     /** Optional timer that will auto end the counter after the specified 'expiresIn'. */
     timeout?: any;
-    /** Default Counter constructor expects a mandatory ID, and optional 'tag' and 'expiresIn' options. */
-    constructor(id: string, options?: CounterOptions);
     /**
-     * Ends the counter for the specified metric, with an optional error to be passed along.
+     * Ends the counter for the specified metric, with an optional error..
      * @param error Optional error that ocurred while processing the metric.
      */
     end(error?: any): void;

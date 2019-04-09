@@ -1,51 +1,75 @@
-/*
- * Monitorado: Output
- */
+// Monitorado: output.ts
 
 import {Percentile} from "./percentile"
+import {Counter} from "./counter"
 
+/** @hidden */
 const _ = require("lodash")
+/** @hidden */
 const logger = require("anyhow")
+/** @hidden */
 const jaul = require("jaul")
+/** @hidden */
 const metrics = require("./metrics")
+/** @hidden */
 const moment = require("moment")
+/** @hidden */
 const setmeup = require("setmeup")
+/** @hidden */
 let settings
 
+/** Summary of counters for a specific metric.  */
 interface Summary {
+    /** Number of calls. */
     calls: number
+    /** Number of counters that had errors. */
     errors: number
+    /** Number of counters that expired. */
     expired: number
+    /** Minimum processing time. */
     min: number
+    /** Maximum processing time. */
     max: number
+    /** Average processing time. */
     avg: number
+    /** Optional data for the counters. */
     data?: any
 }
 
+/** Sample counter for a specific metric. */
 interface Sample {
+    /** Start time as a unix timestamp. */
     startTime: number
+    /** Total duration for the counter. */
     duration: number
+    /** Optional tag for the counter. */
     tag?: string
+    /** Optional data for the counter. */
     data?: any
 }
 
-/** Options to be passed when generating a new output. */
+/** Options to be passed when generating a new output. The defaults are defined on the settings.default.json file. */
 export interface OutputOptions {
+    /** List of aggregated keys. */
     aggregatedKeys?: any
+    /** Include the last X counter samples on the output. */
     includeLastSamples?: number
+    /** Array of intervals to calculate the summaries. */
     intervals?: number[]
+    /** Array of metric keys to be available on the output. */
     keys?: string[]
+    /** Array of percentiules to be calculated. */
     percentiles?: number[]
+    /** Include system metrics on the output? */
     systemMetrics?: any
 }
 
-/*
- * Output class.
- */
+/** Metrics output class. */
 export class Output {
+    /** The default Output constructor with additional options. */
     constructor(options?: OutputOptions) {
         settings = setmeup.settings.monitorado
-        logger.debug("Metrado.output", options)
+        logger.debug("Monitorado.Output", options)
 
         // Set default options.
         if (!options) options = {}
@@ -74,7 +98,7 @@ export class Output {
             let obj = metrics[key]
 
             if (!obj) {
-                logger.warn("Metrado.output", `No metrics for '${key}'`)
+                logger.warn("Monitorado.Output", `No metrics for '${key}'`)
             } else {
                 result[key] = {total_calls: obj.length}
 
@@ -110,7 +134,7 @@ export class Output {
                     if (metrics[key]) {
                         obj = obj.concat(metrics[key])
                     } else {
-                        logger.debug("Metrado.output", `Agreggated key ${agKey}`, `No metrics for '${key}'`)
+                        logger.warn("Monitorado.Output", `Agreggated key ${agKey}`, `No metrics for '${key}'`)
                     }
                 }
 
@@ -125,7 +149,7 @@ export class Output {
             }
         }
 
-        logger.debug("Metrado.output", result)
+        logger.debug("Monitorado.Output", result)
 
         this.result = result
     }
@@ -133,16 +157,21 @@ export class Output {
     // PROPERTIES
     // --------------------------------------------------------------------------
 
+    /** The actual output results will be saved on this variable. */
     private result: any
 
+    /** Helper to get the [[result]] JSON. */
     get json() {
         return this.result
     }
 
-    /*
+    /**
      * Generate summary for the specified object and interval.
+     * @options Output options.
+     * @counters Array of counters to get the summary for.
+     * @interval Interval (in minutes) of the summary output.
      */
-    private getSummary(options: OutputOptions, obj, interval) {
+    private getSummary(options: OutputOptions, counters: Counter[], interval: number) {
         const now = moment().valueOf()
         const values = []
         let errorCount = 0
@@ -153,23 +182,23 @@ export class Output {
         let dataKeys = []
 
         // Iterate logged metrics, and get only if corresponding to the specified interval.
-        while (i < obj.length) {
-            const diff = now - obj[i].startTime
+        while (i < counters.length) {
+            const diff = now - counters[i].startTime
             const minutes = diff / 1000 / 60
 
             if (minutes <= interval) {
-                values.push(obj[i])
+                values.push(counters[i])
 
                 // Increment error and expired count.
-                if (obj[i].error) {
+                if (counters[i].error) {
                     errorCount++
                 }
-                if (obj[i].expired) {
+                if (counters[i].expired) {
                     expiredCount++
                 }
 
                 // Check if extra data was passed, if so, append to the dataKeys list.
-                const objData = obj[i].data
+                const objData = counters[i].data
 
                 if (objData != null) {
                     dataKeys = _.concat(dataKeys, _.keys(objData))
@@ -177,7 +206,7 @@ export class Output {
 
                 i++
             } else {
-                i = obj.length
+                i = counters.length
             }
         }
 
@@ -226,30 +255,31 @@ export class Output {
         return result
     }
 
-    /*
+    /**
      * Helper to get summary for last calls.
-     */
-    private getLastSamples(value) {
-        if (value) {
+     * @counter The counter object.
+     * */
+    private getLastSamples(counter: Counter) {
+        if (counter) {
             try {
                 const result = {} as Sample
 
-                result.startTime = value.startTime
-                result.duration = value.duration
+                result.startTime = counter.startTime
+                result.duration = counter.duration
 
                 // Append tag?
-                if (typeof value.tag != "undefined") {
-                    result.tag = value.tag
+                if (typeof counter.tag != "undefined") {
+                    result.tag = counter.tag
                 }
 
                 // Append data?
-                if (typeof value.data != "undefined") {
-                    result.data = value.data
+                if (typeof counter.data != "undefined") {
+                    result.data = counter.data
                 }
 
                 return result
             } catch (ex) {
-                logger.error("Metrado.getLast", `Start time ${value.startTime}`, ex)
+                logger.error("Monitorado.getLast", `Start time ${counter.startTime}`, ex)
             }
         }
 

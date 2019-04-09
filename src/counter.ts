@@ -1,13 +1,11 @@
-/*
- * Monitorado: Counter
- */
+// Monitorado: counter.ts
 
+/** @hidden */
 const logger = require("anyhow")
+/** @hidden */
 const moment = require("moment")
 
-/**
- * Metric options when starting a new metric.
- */
+/** Metric options when starting a new metric. */
 export interface CounterOptions {
     /** metric should expire in these amount of milliseconds if not ended. */
     expiresIn?: number
@@ -15,29 +13,8 @@ export interface CounterOptions {
     tag?: string
 }
 
-/**
- * Represents a single metric counter with time, duratiomn and additional info.
- */
+/** Represents a single metric counter with time, duratiomn and additional info. */
 export class Counter {
-    /** Shared ID of this counter. */
-    id: string
-    /** The start time (unix timestamp ion milliseconds). */
-    startTime: number
-    /** The start time (unix timestamp ion milliseconds). */
-    endTime?: number
-    /** Total duration, only set after counter has ended. */
-    duration?: number
-    /** Optional, will be true if the counter has expired. */
-    expired?: boolean
-    /** Optional tag or label with extra information about the counter. */
-    tag?: string
-    /** Optional data for the counter. */
-    data?: any
-    /** Optional error object or string in case counter ended but there was an error. */
-    error?: any
-    /** Optional timer that will auto end the counter after the specified 'expiresIn'. */
-    timeout?: any
-
     /** Default Counter constructor expects a mandatory ID, and optional 'tag' and 'expiresIn' options. */
     constructor(id: string, options?: CounterOptions) {
         this.id = id
@@ -60,11 +37,41 @@ export class Counter {
         }
     }
 
+    // PROPERTIES
+    // --------------------------------------------------------------------------
+
+    /** Shared ID of this counter. */
+    id: string
+    /** The start time (unix timestamp ion milliseconds). */
+    startTime: number
+    /** The start time (unix timestamp ion milliseconds). */
+    endTime?: number
+    /** Total duration, only set after counter has ended. */
+    duration?: number
+    /** Optional, will be true if the counter has expired. */
+    expired?: boolean
+    /** Optional tag or label with extra information about the counter. */
+    tag?: string
+    /** Optional data for the counter. */
+    data?: any
+    /** Optional error object or string in case counter ended but there was an error. */
+    error?: any
+    /** Optional timer that will auto end the counter after the specified 'expiresIn'. */
+    timeout?: any
+
+    // METHODS
+    // --------------------------------------------------------------------------
+
     /**
-     * Ends the counter for the specified metric, with an optional error to be passed along.
+     * Ends the counter for the specified metric, with an optional error..
      * @param error Optional error that ocurred while processing the metric.
      */
     end(error?: any): void {
+        if (this.expired) {
+            logger.warn("Monitorado.end", `Metric ${this.id} started at ${this.startTime} has expired`)
+            return
+        }
+
         this.endTime = moment().valueOf()
         this.duration = this.endTime - this.startTime
 

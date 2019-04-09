@@ -1,6 +1,3 @@
-/**
- * Monitorado: HTTP Server
- */
 import express = require("express");
 /**
  * This is a HTTP server helper that you can use to make the metrics
@@ -9,21 +6,22 @@ import express = require("express");
  */
 declare class HttpServer {
     private static _instance;
+    /** @hidden */
     static readonly Instance: HttpServer;
-    /**
-     * Default HTTP server constructor will set the default settings.
-     */
+    /** Default HTTP server constructor will set the default settings. */
     constructor();
-    /**
-     * The HTTP server created using Express.
-     */
+    /** The HTTP server created using Express. */
     server: any;
+    /** The Express application, in case you want to add extra routes or middlewares. */
     expressApp: express.Application;
-    start(): boolean;
-    kill(): boolean;
+    /** Create the Express application and starts a HTTP server to output metrics. */
+    start(): void;
+    /** Close the HTTP server and kill the Express app. */
+    kill(): void;
     /**
-     * Check if a valid token was passed on to the request.
+     * Check if a valid token was passed via the Authorization header.
      * @param req Request object from client.
+     * @returns True if passed token is valid, otherwise false.
      */
     validateToken(req: express.Request): boolean;
 }

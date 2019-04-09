@@ -1,6 +1,4 @@
-/**
- * Monitorado: Percentile
- */
+// Monitorado: percentile.ts
 
 /**
  * This is a helper class to calculate percentiles. Can also be used by external modules
