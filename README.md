@@ -34,7 +34,7 @@ for (let i = 0; i < 100; i++) {
     let expiringMt = monitorado.start("timeout-method", {expiresIn: 5000})
     await myApp.externalCall()
 
-    // If externalCall takes more than 5 sec, will auto expire before the .end().
+    // If externalCall takes more than 5 sec, calling .end() won't do anything.
     expiringMt.end()
 }
 
