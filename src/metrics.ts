@@ -10,3 +10,4 @@ class Metrics {
 }
 
 export = Metrics.Instance
+

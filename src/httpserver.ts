@@ -24,6 +24,7 @@ class HttpServer {
         return this._instance || (this._instance = new this())
     }
 
+
     /** Default HTTP server constructor will set the default settings. */
     constructor() {
         settings = setmeup.settings.monitorado

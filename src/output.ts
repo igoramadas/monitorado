@@ -18,6 +18,7 @@ const setmeup = require("setmeup")
 /** @hidden */
 let settings
 
+
 /** Summary of counters for a specific metric.  */
 interface Summary {
     /** Number of calls. */
