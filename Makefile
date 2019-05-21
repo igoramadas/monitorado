@@ -34,6 +34,7 @@ update:
 	rm -rf node_modules/jaul
 	rm -rf node_modules/anyhow
 	rm -rf node_modules/setmeup
+	rm package-lock.json
 	ncu -u
 	npm install
 	npm update
