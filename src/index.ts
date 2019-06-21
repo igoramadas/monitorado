@@ -37,9 +37,7 @@ class Monitorado {
         }
 
         // Load default settings.
-        if (!setmeup.settings.monitorado) {
-            setmeup.load(__dirname + "/../settings.default.json")
-        }
+        setmeup.load(__dirname + "/../settings.default.json", {overwrite: false})
 
         // Expose settings.
         settings = setmeup.settings.monitorado
