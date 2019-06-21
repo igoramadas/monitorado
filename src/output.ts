@@ -18,7 +18,6 @@ const setmeup = require("setmeup")
 /** @hidden */
 let settings
 
-
 /** Summary of counters for a specific metric.  */
 interface Summary {
     /** Number of calls. */
@@ -33,6 +32,8 @@ interface Summary {
     max: number
     /** Average processing time. */
     avg: number
+    /** Success rate (total calls against errors and expired) */
+    successRate: number
     /** Optional data for the counters. */
     data?: any
 }
@@ -228,6 +229,14 @@ export class Output {
         result.max = _.max(durations) || 0
         result.avg = avg || 0
         result.avg = Math.round(result.avg)
+
+        // Calculate success rate based on total calls and errors / expired.
+        if (result.calls == 0 || errorCount + expiredCount == 0) {
+            result.successRate = 100
+        } else {
+            result.successRate = 100 - (errorCount + expiredCount) / values.length
+            result.successRate = Math.round(result.successRate)
+        }
 
         // Calculate metrics for extra passed data.
         if (dataKeys.length > 0) {
