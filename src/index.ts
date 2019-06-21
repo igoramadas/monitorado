@@ -26,12 +26,17 @@ class Monitorado {
         return this._instance || (this._instance = new this())
     }
 
-
     /**
      * Default Monitorado constructor. This will load settings from current
      * environment and setup the necessary timers.
      */
     constructor() {
+        if (!logger.isReady) {
+            /* istanbul ignore next */
+            logger.setup()
+        }
+
+        // Load settings.
         setmeup.load()
 
         // Expose settings.
