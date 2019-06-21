@@ -24,12 +24,6 @@ class HttpServer {
         return this._instance || (this._instance = new this())
     }
 
-
-    /** Default HTTP server constructor will set the default settings. */
-    constructor() {
-        settings = setmeup.settings.monitorado
-    }
-
     // PROPERTIES
     // --------------------------------------------------------------------------
 
@@ -44,6 +38,10 @@ class HttpServer {
 
     /** Create the Express application and starts a HTTP server to output metrics. */
     start(): void {
+        if (!settings) {
+            settings = setmeup.settings.monitorado
+        }
+
         if (this.server) {
             logger.warn("Monitorado.HttpServer.start", "Already started")
             return

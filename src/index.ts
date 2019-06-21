@@ -36,8 +36,10 @@ class Monitorado {
             logger.setup()
         }
 
-        // Load settings.
-        setmeup.load()
+        // Load default settings.
+        if (!setmeup.settings.monitorado) {
+            setmeup.load(__dirname + "/../settings.default.json")
+        }
 
         // Expose settings.
         settings = setmeup.settings.monitorado

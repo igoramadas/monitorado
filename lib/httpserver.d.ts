@@ -8,8 +8,6 @@ declare class HttpServer {
     private static _instance;
     /** @hidden */
     static readonly Instance: HttpServer;
-    /** Default HTTP server constructor will set the default settings. */
-    constructor();
     /** The HTTP server created using Express. */
     server: any;
     /** The Express application, in case you want to add extra routes or middlewares. */
