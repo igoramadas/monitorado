@@ -38,9 +38,7 @@ class HttpServer {
 
     /** Create the Express application and starts a HTTP server to output metrics. */
     start(): void {
-        if (!settings) {
-            settings = setmeup.settings.monitorado
-        }
+        settings = setmeup.settings.monitorado
 
         if (this.server) {
             logger.warn("Monitorado.HttpServer.start", "Already started")

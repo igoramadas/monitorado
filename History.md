@@ -4,6 +4,7 @@
 =====
 * NEW! Success rate (errored vs. total calls) on output.
 * Calls anyhow.setup() on load, if anyhow is not ready yet.
+* Updated dependencies.
 
 1.0.1
 =====
