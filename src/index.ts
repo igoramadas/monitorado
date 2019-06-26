@@ -85,6 +85,11 @@ class Monitorado {
     start(id: string, options?: CounterOptions): Counter {
         logger.debug("Monitorado.start", options)
 
+        // If options passed as string, treat as the tag.
+        if (_.isString(options)) {
+            options = {tag: options as string}
+        }
+
         // Set default options.
         if (!options) options = {}
         _.defaults(options, {expiresIn: 0})

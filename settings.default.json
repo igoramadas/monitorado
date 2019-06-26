@@ -7,9 +7,10 @@
         "aggregatedKeys": null,
         // Cleanup empty metrics (means calls history has expired so total calls is 0)?
         "cleanupEmpty": true,
-        // Cleanup interval, in minutes.
+        // Cleanup interval (in minutes).
         "cleanupInterval": 20,
-        // Expire metrics data after X minutes.
+        // Clear metrics older than 12 hours (value in minutes). Please note that this
+        // value should be at least equal to the highest value of the `intervals` array.
         "expireAfter": 720,
         // Set the values below if you wish the module to spin up a HTTP server to serve the metrics output.
         // You can also set the path (default is /, but for example you could use /metrics).

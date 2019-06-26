@@ -1,5 +1,9 @@
 # Changelog for Monitorado
 
+1.1.2
+=====
+* Consider options as tag if passed as string on metrics.start().
+
 1.1.1
 =====
 * Force load default settings on init.
