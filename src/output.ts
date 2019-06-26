@@ -45,7 +45,7 @@ interface Sample {
     /** Total duration for the counter. */
     duration: number
     /** Optional tag for the counter. */
-    tag?: string
+    tag?: string | number | boolean | Date
     /** Optional data for the counter. */
     data?: any
 }

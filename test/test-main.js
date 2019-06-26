@@ -105,10 +105,12 @@ describe("Metrics Main Tests", function() {
             let output = monitorado.output()
             let expired = output.expiredCall.last_1min.expired
 
-            if (expired > 0) {
-                done()
-            } else {
+            if (expired < 1) {
                 done(`Output should have 1 expired metric for expiredCall, but has ${expired}.`)
+            } else if (!mt.expired) {
+                done("Counter should have expired = true.")
+            } else {
+                done()
             }
         }
 
@@ -131,6 +133,23 @@ describe("Metrics Main Tests", function() {
         }
 
         setTimeout(callback, 50)
+    })
+
+    it("Fails to add counter passing object as tag", function(done) {
+        let objTag = {
+            something: true,
+            inner: {
+                someDate: new Date()
+            }
+        }
+        try {
+            let mt = monitorado.start("shouldNotBreak", {
+                tag: objTag
+            })
+            done("Passing object as tag should throw exception.")
+        } catch (ex) {
+            done()
+        }
     })
 
     it("Output has the previously set counter with error", function(done) {

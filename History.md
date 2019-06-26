@@ -3,6 +3,7 @@
 1.1.2
 =====
 * Consider options as tag if passed as string on metrics.start().
+* Tags must now be string, number, boolean or date.
 
 1.1.1
 =====

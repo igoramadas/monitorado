@@ -3,7 +3,7 @@ export interface CounterOptions {
     /** metric should expire in these amount of milliseconds if not ended. */
     expiresIn?: number;
     /** Custom tag or text to be associated with that particular metric. */
-    tag?: string;
+    tag?: string | number | boolean | Date;
 }
 /** Represents a single metric counter with time, duratiomn and additional info. */
 export declare class Counter {
@@ -20,7 +20,7 @@ export declare class Counter {
     /** Optional, will be true if the counter has expired. */
     expired?: boolean;
     /** Optional tag or label with extra information about the counter. */
-    tag?: string;
+    tag?: string | number | boolean | Date;
     /** Optional data for the counter. */
     data?: any;
     /** Optional error object or string in case counter ended but there was an error. */
