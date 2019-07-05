@@ -162,6 +162,16 @@ describe("Metrics Main Tests", function() {
         }
     })
 
+    it("Output has a correct success rate", function(done) {
+        let output = monitorado.output()
+
+        if (output.withError.last_1min.successRate < 100) {
+            done()
+        } else {
+            done("Metrics 'withError' success rate should be less than 100.")
+        }
+    })
+
     it("Output has system metrics", function(done) {
         let output = monitorado.output()
 

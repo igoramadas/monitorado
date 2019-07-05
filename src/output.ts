@@ -234,7 +234,7 @@ export class Output {
         if (result.calls == 0 || errorCount + expiredCount == 0) {
             result.successRate = 100
         } else {
-            result.successRate = 100 - (errorCount + expiredCount) / values.length
+            result.successRate = 100 - ((errorCount + expiredCount) / values.length) * 100
             result.successRate = Math.round(result.successRate)
         }
 

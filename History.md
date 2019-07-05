@@ -1,5 +1,9 @@
 # Changelog for Monitorado
 
+1.1.3
+=====
+* Fixed success rate calculation in output (was always 100).
+
 1.1.2
 =====
 * Consider options as tag if passed as string on metrics.start().
