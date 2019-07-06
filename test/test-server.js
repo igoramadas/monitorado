@@ -44,10 +44,6 @@ describe("Metrics Main Tests", function() {
         supertest = require("supertest").agent(monitorado.httpServer.expressApp)
     })
 
-    it("Try starting after server has already started", function() {
-
-    })
-
     it("Output via dedicated HTTP server", function(done) {
         let cb = () => supertest.get("/").expect("Content-Type", /json/).expect(200, done)
         setTimeout(cb, 500)
@@ -71,6 +67,20 @@ describe("Metrics Main Tests", function() {
 
         supertest.get("/").expect(403).end(deniedCb)
         supertest.get("/").set("Authorization", "Bearer: abc").expect("Content-Type", /json/).expect(200).end(validCb)
+    })
+
+    it("Accept multiple tokens", function(done) {
+        settings.httpServer.token = ["abc", "def"]
+
+        let validCb = (err, res) => {
+            if (err) {
+                done(err)
+            } else {
+                done()
+            }
+        }
+
+        supertest.get("/").set("Authorization", "Bearer: def").expect("Content-Type", /json/).expect(200).end(validCb)
     })
 
     it("Kill the dedicated HTTP server twice", function() {

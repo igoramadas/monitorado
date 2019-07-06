@@ -208,6 +208,7 @@ export class Output {
 
                 i++
             } else {
+                /* istanbul ignore next */
                 i = counters.length
             }
         }
@@ -270,28 +271,26 @@ export class Output {
      * @counter The counter object.
      */
     private getLastSamples(counter: Counter) {
-        if (counter) {
-            try {
-                const result = {} as Sample
+        try {
+            const result = {} as Sample
 
-                result.startTime = counter.startTime
-                result.duration = counter.duration
+            result.startTime = counter.startTime
+            result.duration = counter.duration
 
-                // Append tag?
-                if (typeof counter.tag != "undefined") {
-                    result.tag = counter.tag
-                }
-
-                // Append data?
-                if (typeof counter.data != "undefined") {
-                    result.data = counter.data
-                }
-
-                return result
-            } catch (ex) {
-                /* istanbul ignore next */
-                logger.error("Monitorado.getLast", `Start time ${counter.startTime}`, ex)
+            // Append tag?
+            if (typeof counter.tag != "undefined") {
+                result.tag = counter.tag
             }
+
+            // Append data?
+            if (typeof counter.data != "undefined") {
+                result.data = counter.data
+            }
+
+            return result
+        } catch (ex) {
+            /* istanbul ignore next */
+            logger.error("Monitorado.getLast", `Start time ${counter.startTime}`, ex)
         }
 
         /* istanbul ignore next */

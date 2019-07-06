@@ -165,6 +165,7 @@ class Monitorado {
                         i--
                         counter++
                     } else {
+                        /* istanbul ignore next */
                         i = -1
                     }
                 }

@@ -38,9 +38,6 @@ describe("Metrics Main Tests", function() {
         settings = setmeup.settings.monitorado
         settings.saveTo = destinationJson
         settings.expireAfter = 5
-        settings.aggregatedKeys = {
-            iteratorAgg: ["iteratorWithData", "iteratorWithTag", "somethingInvalid"]
-        }
 
         monitorado = require("../lib/index")
 
@@ -92,6 +89,8 @@ describe("Metrics Main Tests", function() {
         for (let i = 0; i < 10; i++) {
             createIteratorWithTag(i)
         }
+
+        monitorado.start("iteratorWithTag", new Date())
 
         setTimeout(done, delay)
     })
@@ -157,7 +156,7 @@ describe("Metrics Main Tests", function() {
             }
         }
         try {
-            let mt = monitorado.start("shouldNotBreak", {
+            monitorado.start("shouldNotBreak", {
                 tag: objTag
             })
             done("Passing object as tag should throw exception.")
@@ -237,6 +236,10 @@ describe("Metrics Main Tests", function() {
     })
 
     it("Output has valid aggregated keys for iteratorWithData and iteratorWithTag", function(done) {
+        settings.aggregatedKeys = {
+            iteratorAgg: ["iteratorWithData", "iteratorWithTag", "somethingInvalid"]
+        }
+
         let output = monitorado.output()
 
         let total = output.iteratorAgg.last_1min.calls
@@ -264,6 +267,20 @@ describe("Metrics Main Tests", function() {
 
         if (!output.iteratorWithData.last_samples || output.iteratorWithData.last_samples.length != 3) {
             done("Output should have last 3 samples for iteratorWithData.")
+        } else {
+            done()
+        }
+    })
+
+    it("Hide system metrics from the output", function(done) {
+        let options = {
+            systemMetrics: false
+        }
+
+        let output = monitorado.output(options)
+
+        if (output[settings.systemMetrics.key]) {
+            done("System metrics should be hidden from the output.")
         } else {
             done()
         }
