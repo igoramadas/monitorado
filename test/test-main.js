@@ -1,5 +1,6 @@
 // TEST: MAIN
 
+let _ = require("lodash")
 let chai = require("chai")
 let fs = require("fs")
 let mocha = require("mocha")
@@ -19,13 +20,6 @@ describe("Metrics Main Tests", function() {
     before(function() {
         let logger = require("anyhow")
         logger.setup("none")
-
-        monitorado = require("../lib/index")
-        setmeup = require("setmeup")
-        settings = setmeup.settings.monitorado
-        settings.aggregatedKeys = {
-            iteratorAgg: ["iteratorWithData", "iteratorWithTag", "somethingInvalid"]
-        }
     })
 
     after(function() {
@@ -34,11 +28,25 @@ describe("Metrics Main Tests", function() {
         }
     })
 
-    it("Has settings defined", function(done) {
-        if (settings) {
-            done()
+    it("Auto adjust expireAfter if less than highest interval", function(done) {
+        setmeup = require("setmeup")
+
+        if (!setmeup.settings.monitorado) {
+            setmeup.settings.monitorado = {}
+        }
+
+        settings = setmeup.settings.monitorado
+        settings.expireAfter = 5
+        settings.aggregatedKeys = {
+            iteratorAgg: ["iteratorWithData", "iteratorWithTag", "somethingInvalid"]
+        }
+
+        monitorado = require("../lib/index")
+
+        if (settings.expireAfter < _.max(settings.intervals)) {
+            done("The expireAfter should be auto adjusted to the highest interval.")
         } else {
-            done("No settings defined.")
+            done()
         }
     })
 
@@ -288,7 +296,7 @@ describe("Metrics Main Tests", function() {
         setTimeout(checkFile, 800)
     })
 
-    it.skip("Loads metrics from a file, avoiding duplicates", function(done) {
+    it("Loads metrics from a file, avoiding duplicates", function(done) {
         let countBefore = monitorado.get("iteratorWithData").length
         monitorado.metrics.loadFrom(destinationJson, true)
         let countAfter = monitorado.get("iteratorWithData").length
@@ -299,8 +307,6 @@ describe("Metrics Main Tests", function() {
             done(`Count for iteratorWithData should be ${countBefore}, but got ${countAfter}.`)
         }
     })
-
-    it.skip("Loads metrics from a JSON object", function(done) {})
 
     it("Metrics cleanup (expireAfter set to 0)", function(done) {
         settings.expireAfter = 0
@@ -313,6 +319,20 @@ describe("Metrics Main Tests", function() {
             done("Iterator metrics should have 0 data, but has " + count + ".")
         } else {
             done()
+        }
+    })
+
+    it("Loads metrics from a JSON object", function(done) {
+        let data = JSON.parse(fs.readFileSync(destinationJson, {
+            encoding: "utf8"
+        }))
+
+        monitorado.metrics.loadFrom(data)
+
+        if (monitorado.get("iteratorWithData") && monitorado.get("iteratorWithData").length > 0) {
+            done()
+        } else {
+            done("Did not load the counters from the specified JSON.")
         }
     })
 })

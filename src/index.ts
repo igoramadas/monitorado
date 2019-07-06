@@ -48,6 +48,7 @@ class Monitorado {
         this.systemInfo = jaul.system.getInfo()
 
         // Make sure we have at least 1 interval defined.
+        /* istanbul ignore next */
         if (!settings.intervals || settings.intervals.length == 0) {
             logger.warn("Monitorado", "No intervals defined on the settings, are you doing this on purpose?")
         } else if (settings.expireAfter > 0) {
