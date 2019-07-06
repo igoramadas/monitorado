@@ -36,6 +36,7 @@ describe("Metrics Main Tests", function() {
         }
 
         settings = setmeup.settings.monitorado
+        settings.saveTo = destinationJson
         settings.expireAfter = 5
         settings.aggregatedKeys = {
             iteratorAgg: ["iteratorWithData", "iteratorWithTag", "somethingInvalid"]
@@ -282,8 +283,8 @@ describe("Metrics Main Tests", function() {
         done()
     })
 
-    it("Saves metrics to a JSON file.", function(done) {
-        monitorado.metrics.saveTo(destinationJson)
+    it("Saves metrics to a JSON file", function(done) {
+        monitorado.metrics.saveTo()
 
         let checkFile = function() {
             if (fs.existsSync(destinationJson)) {
@@ -294,6 +295,15 @@ describe("Metrics Main Tests", function() {
         }
 
         setTimeout(checkFile, 800)
+    })
+
+    it("Fails to save metrics to invalid path", function(done) {
+        try {
+            monitorado.metrics.saveTo(new Date())
+            done("Should have failed to save to invalid file path.")
+        } catch (ex) {
+            done()
+        }
     })
 
     it("Loads metrics from a file, avoiding duplicates", function(done) {
@@ -334,5 +344,22 @@ describe("Metrics Main Tests", function() {
         } else {
             done("Did not load the counters from the specified JSON.")
         }
+    })
+
+    it("Fail to load metrics from invalid JSON", function(done) {
+        try {
+            monitorado.metrics.loadFrom("some-incorrect-file")
+            returndone("Should have failed when loading from non existing file.")
+        } catch (ex) {}
+
+        try {
+            let invalidObject = {
+                stuff: true
+            }
+            monitorado.metrics.loadFrom(invalidObject)
+            return done("Should have failed when loading from invalid object.")
+        } catch (ex) {}
+
+        done()
     })
 })

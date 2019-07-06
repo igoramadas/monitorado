@@ -48,6 +48,7 @@ export class Percentile {
             }
         }
 
+        /* istanbul ignore next */
         return null
     }
 
