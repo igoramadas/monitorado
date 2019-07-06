@@ -79,7 +79,7 @@ export class Output {
 
         // No keys passed? Use all.
         if (!options.keys) {
-            options.keys = _.keys(metrics)
+            options.keys = _.keys(metrics.counters)
         }
 
         const result = {}
@@ -97,7 +97,7 @@ export class Output {
 
         // For each passed metric key...
         for (let key of options.keys) {
-            let obj = metrics[key]
+            let obj = metrics.counters[key]
 
             if (!obj) {
                 logger.warn("Monitorado.Output", `No metrics for '${key}'`)
@@ -133,8 +133,8 @@ export class Output {
                 let obj = []
 
                 for (let key of subKeys) {
-                    if (metrics[key]) {
-                        obj = obj.concat(metrics[key])
+                    if (metrics.counters[key]) {
+                        obj = obj.concat(metrics.counters[key])
                     } else {
                         logger.warn("Monitorado.Output", `Agreggated key ${agKey}`, `No metrics for '${key}'`)
                     }

@@ -8,8 +8,6 @@ const _ = require("lodash")
 /** @hidden */
 const logger = require("anyhow")
 /** @hidden */
-const metrics = require("./metrics")
-/** @hidden */
 const jaul = require("jaul")
 /** @hidden */
 const moment = require("moment")
@@ -48,11 +46,26 @@ class Monitorado {
 
         // Force get system info on init to properly count memory and load avg.
         this.systemInfo = jaul.system.getInfo()
+
+        // Make sure we have at least 1 interval defined.
+        if (!settings.intervals || settings.intervals.length == 0) {
+            logger.warn("Monitorado", "No intervals defined on the settings, are you doing this on purpose?")
+        } else if (settings.expireAfter > 0) {
+            const max = _.max(settings.intervals)
+
+            // Make sure the expireAfter is at least the same as the highest defined interval.
+            if (settings.expireAfter < max) {
+                logger.warn("Monitorado", `Force setting the expireAfter from ${settings.expireAfter} to ${max} to match the highest interval.`)
+                settings.expireAfter = max
+            }
+        }
     }
 
     // PROPERTIES
     // --------------------------------------------------------------------------
 
+    /** The metrics store. */
+    metrics = require("./metrics")
     /** Exposes the HTTP server. */
     httpServer = require("./httpserver")
     /** Percentile calculation helper. */
@@ -73,7 +86,7 @@ class Monitorado {
      * @returns Array of counters for the specified ID, or null if empty / invalid.
      */
     get(id: string): Counter[] {
-        return metrics[id]
+        return this.metrics.counters[id]
     }
 
     /**
@@ -94,14 +107,15 @@ class Monitorado {
         if (!options) options = {}
         _.defaults(options, {expiresIn: 0})
 
-        let obj = new Counter(id, options)
+        let obj = new Counter(id)
+        obj.start(options)
 
         // Create array of counters for the selected ID. Add metric to the beggining of the array.
-        if (metrics[id] == null) {
-            metrics[id] = []
+        if (this.metrics.counters[id] == null) {
+            this.metrics.counters[id] = []
         }
 
-        metrics[id].unshift(obj)
+        this.metrics.counters[id].unshift(obj)
 
         return obj
     }
@@ -121,12 +135,12 @@ class Monitorado {
         const emptyIds = []
 
         // Get unique counter IDs.
-        let keys = _.keys(metrics)
+        let keys = _.keys(this.metrics.counters)
 
         // Iterate metrics collection.
         try {
             for (let key of keys) {
-                const obj = metrics[key]
+                const obj = this.metrics.counters[key]
                 let i
 
                 if (!obj || obj.length < 1) {
@@ -162,7 +176,7 @@ class Monitorado {
         // Delete empty metrics, if enabled on settings.
         if (settings.cleanupEmpty && emptyIds.length > 0) {
             for (let key of emptyIds) {
-                delete metrics[key]
+                delete this.metrics.counters[key]
             }
         }
 

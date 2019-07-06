@@ -10,6 +10,8 @@ declare class Monitorado {
      * environment and setup the necessary timers.
      */
     constructor();
+    /** The metrics store. */
+    metrics: any;
     /** Exposes the HTTP server. */
     httpServer: any;
     /** Percentile calculation helper. */

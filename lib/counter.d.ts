@@ -8,7 +8,7 @@ export interface CounterOptions {
 /** Represents a single metric counter with time, duratiomn and additional info. */
 export declare class Counter {
     /** Default Counter constructor expects a mandatory ID, and optional 'tag' and 'expiresIn' options. */
-    constructor(id: string, options?: CounterOptions);
+    constructor(id: string);
     /** Shared ID of this counter. */
     id: string;
     /** The start time (unix timestamp ion milliseconds). */
@@ -28,6 +28,11 @@ export declare class Counter {
     /** Optional timer that will auto end the counter after the specified 'expiresIn'. */
     timeout?: any;
     /**
+     * Start the counter with the specified options.
+     * @param options Additional options (expiresIn, tag, etc.).
+     */
+    start(options?: CounterOptions): void;
+    /**
      * Ends the counter for the specified metric, with an optional error..
      * @param error Optional error that ocurred while processing the metric.
      */
@@ -38,4 +43,13 @@ export declare class Counter {
      * @param value The data value.
      */
     setData(key: string, value: any): void;
+    /**
+     * Get a JSON export of the counter that can be used to persist its data.
+     */
+    toJSON(): any;
+    /**
+     * Imports counter data from the specified JSON object.
+     * @param data JSON object representing the data to be imported.
+     */
+    fromJSON(data: any): void;
 }

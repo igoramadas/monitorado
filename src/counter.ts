@@ -7,6 +7,9 @@ const logger = require("anyhow")
 /** @hidden */
 const moment = require("moment")
 
+/** List of counter properties that are relevant when exporting / importing. */
+const relevantProps = ["id", "startTime", "endTime", "duration", "expired", "tag", "data", "error"]
+
 /** Metric options when starting a new metric. */
 export interface CounterOptions {
     /** metric should expire in these amount of milliseconds if not ended. */
@@ -18,31 +21,8 @@ export interface CounterOptions {
 /** Represents a single metric counter with time, duratiomn and additional info. */
 export class Counter {
     /** Default Counter constructor expects a mandatory ID, and optional 'tag' and 'expiresIn' options. */
-    constructor(id: string, options?: CounterOptions) {
+    constructor(id: string) {
         this.id = id
-        this.startTime = moment().valueOf()
-
-        // Append tag?
-        if (options.tag) {
-            if (_.isDate(options.tag)) {
-                this.tag = options.tag.toString()
-            } else if (!_.isObject(options.tag)) {
-                this.tag = options.tag
-            } else {
-                throw new Error("The tag should be a string, number, boolean or date.")
-            }
-        }
-
-        // Should the metric expire (value in milliseconds)?
-        if (options.expiresIn > 0) {
-            const expiryTimeout = () => {
-                logger.debug("Monitorado.start", "Expired!", this)
-                this.expired = true
-                return this.end()
-            }
-
-            this.timeout = setTimeout(expiryTimeout, options.expiresIn)
-        }
     }
 
     // PROPERTIES
@@ -69,6 +49,36 @@ export class Counter {
 
     // METHODS
     // --------------------------------------------------------------------------
+
+    /**
+     * Start the counter with the specified options.
+     * @param options Additional options (expiresIn, tag, etc.).
+     */
+    start(options?: CounterOptions): void {
+        this.startTime = moment().valueOf()
+
+        // Append tag?
+        if (options.tag) {
+            if (_.isDate(options.tag)) {
+                this.tag = options.tag.toString()
+            } else if (!_.isObject(options.tag)) {
+                this.tag = options.tag
+            } else {
+                throw new Error("The tag should be a string, number, boolean or date.")
+            }
+        }
+
+        // Should the metric expire (value in milliseconds)?
+        if (options.expiresIn > 0) {
+            const expiryTimeout = () => {
+                logger.debug("Monitorado.start", "Expired!", this)
+                this.expired = true
+                return this.end()
+            }
+
+            this.timeout = setTimeout(expiryTimeout, options.expiresIn)
+        }
+    }
 
     /**
      * Ends the counter for the specified metric, with an optional error..
@@ -108,5 +118,34 @@ export class Counter {
         }
 
         this.data[key] = value
+    }
+
+    /**
+     * Get a JSON export of the counter that can be used to persist its data.
+     */
+    toJSON(): any {
+        let result = {} as any
+
+        for (let p of relevantProps) {
+            if (typeof this[p] != "undefined") {
+                if (_.isObject(this[p])) {
+                    result[p] = _.cloneDeep(this[p])
+                } else {
+                    result[p] = this[p]
+                }
+            }
+        }
+
+        return result
+    }
+
+    /**
+     * Imports counter data from the specified JSON object.
+     * @param data JSON object representing the data to be imported.
+     */
+    fromJSON(data: any): void {
+        for (let p of relevantProps) {
+            this[p] = data[p]
+        }
     }
 }

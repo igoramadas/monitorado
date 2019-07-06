@@ -1,5 +1,10 @@
 # Changelog for Monitorado
 
+1.2.0
+=====
+* NEW! You can now persist metrics to JSON files.
+* Added some basic settings validation to avoid unexpected behaviour.
+
 1.1.3
 =====
 * Fixed success rate calculation in output (was always 100).

@@ -1,9 +1,11 @@
 // TEST: MAIN
 
 let chai = require("chai")
+let fs = require("fs")
 let mocha = require("mocha")
 let describe = mocha.describe
 let before = mocha.before
+let after = mocha.after
 let it = mocha.it
 
 chai.should()
@@ -12,7 +14,7 @@ describe("Metrics Main Tests", function() {
     let monitorado = null
     let setmeup = null
     let settings = null
-    let totalCalls = 0
+    let destinationJson = `${__dirname}/metrics.json`
 
     before(function() {
         let logger = require("anyhow")
@@ -23,6 +25,12 @@ describe("Metrics Main Tests", function() {
         settings = setmeup.settings.monitorado
         settings.aggregatedKeys = {
             iteratorAgg: ["iteratorWithData", "iteratorWithTag", "somethingInvalid"]
+        }
+    })
+
+    after(function() {
+        if (fs.existsSync(destinationJson)) {
+            fs.unlinkSync(destinationJson)
         }
     })
 
@@ -41,7 +49,6 @@ describe("Metrics Main Tests", function() {
 
         let createIteratorWithData = function(i) {
             let mt = monitorado.start("iteratorWithData")
-            totalCalls++
 
             let cb = function() {
                 mt.setData("counter", i)
@@ -59,7 +66,6 @@ describe("Metrics Main Tests", function() {
                 tag: "counter" + i
             }
             let mt = monitorado.start("iteratorWithTag", tag)
-            totalCalls++
 
             let cb = function() {
                 mt.end()
@@ -83,7 +89,6 @@ describe("Metrics Main Tests", function() {
 
     it("Add counter with error", function(done) {
         let mt = monitorado.start("withError")
-        totalCalls++
 
         let cb = function() {
             mt.end("Some error")
@@ -254,6 +259,48 @@ describe("Metrics Main Tests", function() {
             done()
         }
     })
+
+    it("Exports correct JSON representation of counters.", function(done) {
+        let counter = monitorado.get("iteratorWithData")[0]
+        let cJson = counter.toJSON()
+        let keys = Object.keys(cJson)
+
+        for (let key of keys) {
+            if (counter[key].toString() != cJson[key].toString()) {
+                return done(`Property ${key} does not match: ${counter[key]} != ${cJson[key]}`)
+            }
+        }
+
+        done()
+    })
+
+    it("Saves metrics to a JSON file.", function(done) {
+        monitorado.metrics.saveTo(destinationJson)
+
+        let checkFile = function() {
+            if (fs.existsSync(destinationJson)) {
+                done()
+            } else {
+                done(`File ${destinationJson} does not exist.`)
+            }
+        }
+
+        setTimeout(checkFile, 800)
+    })
+
+    it.skip("Loads metrics from a file, avoiding duplicates", function(done) {
+        let countBefore = monitorado.get("iteratorWithData").length
+        monitorado.metrics.loadFrom(destinationJson, true)
+        let countAfter = monitorado.get("iteratorWithData").length
+
+        if (countBefore == countAfter) {
+            done()
+        } else {
+            done(`Count for iteratorWithData should be ${countBefore}, but got ${countAfter}.`)
+        }
+    })
+
+    it.skip("Loads metrics from a JSON object", function(done) {})
 
     it("Metrics cleanup (expireAfter set to 0)", function(done) {
         settings.expireAfter = 0
