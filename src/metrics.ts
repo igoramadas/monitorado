@@ -48,11 +48,15 @@ class Metrics {
 
     /**
      * Load counters from the specified filename or JSON object.
-     * @param source Full path to the JSON file, or the JSON object itself.
+     * @param source Full path to the JSON file, or the JSON object itself. Defaults to the settings.saveTo value.
      * @param avoidDuplicates Defaults to false, if true it won't load counters with matching id, startTime, endTime and tag.
      */
-    loadFrom(source: string | any, avoidDuplicates?: boolean): void {
+    loadFrom(source?: string | any, avoidDuplicates?: boolean): void {
         try {
+            if (!source) {
+                source = settings.saveTo
+            }
+
             if (typeof avoidDuplicates == "undefined") {
                 avoidDuplicates = false
             }

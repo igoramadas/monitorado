@@ -323,7 +323,7 @@ describe("Metrics Main Tests", function() {
         }
     })
 
-    it("Loads metrics from a file, avoiding duplicates", function(done) {
+    it("Loads metrics from specified file, avoiding duplicates", function(done) {
         let countBefore = monitorado.get("iteratorWithData").length
         monitorado.metrics.loadFrom(destinationJson, true)
         let countAfter = monitorado.get("iteratorWithData").length
@@ -333,6 +333,11 @@ describe("Metrics Main Tests", function() {
         } else {
             done(`Count for iteratorWithData should be ${countBefore}, but got ${countAfter}.`)
         }
+    })
+
+    it("Loads metrics from default file on settings", function(done) {
+        monitorado.metrics.loadFrom()
+        done()
     })
 
     it("Metrics cleanup (expireAfter set to 0)", function(done) {

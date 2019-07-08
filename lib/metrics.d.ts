@@ -12,10 +12,10 @@ declare class Metrics {
     toJSON(): any;
     /**
      * Load counters from the specified filename or JSON object.
-     * @param source Full path to the JSON file, or the JSON object itself.
+     * @param source Full path to the JSON file, or the JSON object itself. Defaults to the settings.saveTo value.
      * @param avoidDuplicates Defaults to false, if true it won't load counters with matching id, startTime, endTime and tag.
      */
-    loadFrom(source: string | any, avoidDuplicates?: boolean): void;
+    loadFrom(source?: string | any, avoidDuplicates?: boolean): void;
     /**
      * Save the counters to the specified JSON file.
      * @param destination Destination filename, if unspecified it will use the default from settings.
