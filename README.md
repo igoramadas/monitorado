@@ -33,7 +33,7 @@ let output = monitorado.output()
 console.dir(output["db-cleanup"].last_1min)
 ```
 
-### Extra features
+### More features
 
 ```javascript
 for (let i = 0; i < 100; i++) {
@@ -79,6 +79,32 @@ try {
     // You can also protect the endpoint with a token.
     monitorado.settings.httpServer.token = "my-custom-token"
     // Now you need to pass an Authorization: Bearer my-customer-token header.
+}
+```
+
+### Persisting metrics
+
+```javascript
+try {
+    // Save current finished metrics to the monitorado.json file.
+    monitorado.metrics.saveTo()
+
+    // You can also specify a different file path.
+    monitorado.metrics.saveTo("/usr/data/monitorado.json")
+
+    // Or simply get the exported JSON as as object.
+    let data = monitorado.metrics.toJSON()
+    // Send data above to an external storage, S3, etc...
+
+    // Now load metrics from an exported file.
+    monitorado.metrics.loadFrom("/usr/data/monitorado.json")
+
+    // Or load from an exported object directly. For example, download JSON data from S3.
+    let s3data = myS3.downloadFile("monitorado.json")
+    monitorado.metrics.loadFrom(s3data)
+
+    // You can also avoid loading metrics that already exists in memory by using avoidDuplicates = true.
+    monitorado.metrics.loadFrom(s3data, true)
 }
 ```
 

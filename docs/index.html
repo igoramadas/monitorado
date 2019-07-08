@@ -90,7 +90,7 @@
 
 <span class="hljs-comment">// Last 1 minute metrics for db-cleanup...</span>
 <span class="hljs-built_in">console</span>.dir(output[<span class="hljs-string">"db-cleanup"</span>].last_1min)</code></pre>
-				<h3 id="extra-features">Extra features</h3>
+				<h3 id="more-features">More features</h3>
 				<pre><code class="language-javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) {
 
     <span class="hljs-comment">// Auto expire counter after 5 seconds.</span>
@@ -130,6 +130,28 @@ anotherMt.end()
     <span class="hljs-comment">// You can also protect the endpoint with a token.</span>
     monitorado.settings.httpServer.token = <span class="hljs-string">"my-custom-token"</span>
     <span class="hljs-comment">// Now you need to pass an Authorization: Bearer my-customer-token header.</span>
+}</code></pre>
+				<h3 id="persisting-metrics">Persisting metrics</h3>
+				<pre><code class="language-javascript"><span class="hljs-keyword">try</span> {
+    <span class="hljs-comment">// Save current finished metrics to the monitorado.json file.</span>
+    monitorado.metrics.saveTo()
+
+    <span class="hljs-comment">// You can also specify a different file path.</span>
+    monitorado.metrics.saveTo(<span class="hljs-string">"/usr/data/monitorado.json"</span>)
+
+    <span class="hljs-comment">// Or simply get the exported JSON as as object.</span>
+    <span class="hljs-keyword">let</span> data = monitorado.metrics.toJSON()
+    <span class="hljs-comment">// Send data above to an external storage, S3, etc...</span>
+
+    <span class="hljs-comment">// Now load metrics from an exported file.</span>
+    monitorado.metrics.loadFrom(<span class="hljs-string">"/usr/data/monitorado.json"</span>)
+
+    <span class="hljs-comment">// Or load from an exported object directly. For example, download JSON data from S3.</span>
+    <span class="hljs-keyword">let</span> s3data = myS3.downloadFile(<span class="hljs-string">"monitorado.json"</span>)
+    monitorado.metrics.loadFrom(s3data)
+
+    <span class="hljs-comment">// You can also avoid loading metrics that already exists in memory by using avoidDuplicates = true.</span>
+    monitorado.metrics.loadFrom(s3data, <span class="hljs-literal">true</span>)
 }</code></pre>
 				<h2 id="default-settings">Default settings</h2>
 				<p>In a nutshell, the <a href="https://raw.githubusercontent.com/igoramadas/monitorado/master/settings.default.json">default settings</a>
