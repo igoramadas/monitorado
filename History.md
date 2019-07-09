@@ -1,5 +1,9 @@
 # Changelog for Monitorado
 
+1.2.1
+=====
+* Improved metrics persistence logging.
+
 1.2.0
 =====
 * NEW! You can now persist metrics to JSON files.

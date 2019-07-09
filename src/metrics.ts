@@ -52,6 +52,8 @@ class Metrics {
      * @param avoidDuplicates Defaults to false, if true it won't load counters with matching id, startTime, endTime and tag.
      */
     loadFrom(source?: string | any, avoidDuplicates?: boolean): void {
+        let sourceLog
+
         try {
             if (!source) {
                 source = settings.saveTo
@@ -63,8 +65,11 @@ class Metrics {
 
             // If source is a string, consider it as the filename of the JSON file to be loaded.
             if (_.isString(source)) {
+                sourceLog = source
                 source = fs.readFileSync(source, {encoding: "utf8"})
                 source = JSON.parse(source)
+            } else {
+                sourceLog = "Direct JSON"
             }
         } catch (ex) {
             logger.error("Metrics.loadFrom", "Can't parse input JSON", ex)
@@ -107,6 +112,8 @@ class Metrics {
                     this.counters[key].push(counter)
                 }
             }
+
+            logger.info("Metrics.loadFrom", sourceLog, `Loaded ${keys.length} metric keys`)
         } catch (ex) {
             logger.error("Metrics.loadFrom", "Can't build metrics from loaded JSON", ex)
             throw ex
@@ -124,6 +131,7 @@ class Metrics {
 
         try {
             fs.writeFileSync(destination, JSON.stringify(this.toJSON(), null, 2), {encoding: "utf8"})
+            logger.info("Metrics.saveTo", destination, `Saved ${Object.keys(this.counters).length} metric keys`)
         } catch (ex) {
             logger.error("Metrics.saveTo", destination, ex)
             throw ex
