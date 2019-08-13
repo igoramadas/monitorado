@@ -1,5 +1,10 @@
 # Changelog for Monitorado
 
+1.2.2
+=====
+* Improved error logging.
+* Updated dependencies.
+
 1.2.1
 =====
 * Improved metrics persistence logging.
