@@ -2,6 +2,7 @@
 
 1.2.2
 =====
+* Properly handle options on output (arrays ie. intervals were being merged).
 * Improved error logging.
 * Updated dependencies.
 

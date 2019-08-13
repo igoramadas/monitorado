@@ -286,6 +286,28 @@ describe("Metrics Main Tests", function() {
         }
     })
 
+    it("Output intervals should be respected if defined", function(done) {
+        let options = {
+            intervals: [33],
+            systemMetrics: {
+                fields: ["memoryUsage"]
+            }
+        }
+
+        let output = monitorado.output(options)
+        let intervalKeys = _.keys(output.iteratorWithData)
+
+        if (!output.iteratorWithData.last_33min) {
+            done(`Output does not have 33min interval (last_33min key)`)
+        } else if (intervalKeys.length != 2) {
+            done(`Output should have only 33min interval, but got ${intervalKeys.join()}`)
+        } else if (output.system.loadAvg) {
+            done("Output should only have memoryUsage on system, but got also loadAvg")
+        } else {
+            done()
+        }
+    })
+
     it("Exports correct JSON representation of counters.", function(done) {
         let counter = monitorado.get("iteratorWithData")[0]
         let cJson = counter.toJSON()

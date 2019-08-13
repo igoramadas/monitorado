@@ -75,10 +75,12 @@ export class Output {
 
         // Set default options.
         if (!options) options = {}
-        _.defaultsDeep(options, settings)
+        if (typeof options.systemMetrics == "undefined") options.systemMetrics = {}
+        _.defaults(options, settings)
+        _.defaults(options.systemMetrics, settings.systemMetrics)
 
-        // No keys passed? Use all.
-        if (!options.keys) {
+        // Output all keys if none was defined.
+        if (!options.keys || options.keys.length == 0) {
             options.keys = _.keys(metrics.counters)
         }
 
