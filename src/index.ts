@@ -172,7 +172,7 @@ class Monitorado {
             }
         } catch (ex) {
             /* istanbul ignore next */
-            logger.error("Monitorado.cleanup", ex)
+            logger.error("Monitorado.cleanup", `Expire after ${settings.expireAfter}`, ex)
         }
 
         // Delete empty metrics, if enabled on settings.
@@ -183,7 +183,7 @@ class Monitorado {
         }
 
         if (counter > 0 && keyCounter > 0) {
-            return logger.info("Monitorado.cleanup", `Removed ${counter} counters from ${keyCounter} keys.`)
+            return logger.info("Monitorado.cleanup", `Expire after ${settings.expireAfter}`, `Removed ${counter} counters from ${keyCounter} keys.`)
         }
     }
 
