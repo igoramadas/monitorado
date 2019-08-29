@@ -190,15 +190,16 @@ export class Output {
             const diff = now - counters[i].startTime
             const minutes = diff / 1000 / 60
 
-            if (minutes <= interval && counters[i].endTime != null) {
-                values.push(counters[i])
-
-                // Increment error and expired count.
-                if (counters[i].error) {
-                    errorCount++
-                }
+            if (minutes <= interval) {
                 if (counters[i].expired) {
                     expiredCount++
+                } else if (counters[i].endTime != null) {
+                    values.push(counters[i])
+                }
+
+                // Increment error count.
+                if (counters[i].error) {
+                    errorCount++
                 }
 
                 // Check if extra data was passed, if so, append to the dataKeys list.
