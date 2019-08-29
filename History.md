@@ -1,5 +1,10 @@
 # Changelog for Monitorado
 
+1.2.3
+=====
+* Fixed output that was including unfinished metrics in the calculations
+* Updated dependencies.
+
 1.2.2
 =====
 * Properly handle options on output (arrays ie. intervals were being merged).

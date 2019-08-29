@@ -190,7 +190,7 @@ export class Output {
             const diff = now - counters[i].startTime
             const minutes = diff / 1000 / 60
 
-            if (minutes <= interval) {
+            if (minutes <= interval && counters[i].endTime != null) {
                 values.push(counters[i])
 
                 // Increment error and expired count.

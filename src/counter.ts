@@ -145,7 +145,9 @@ export class Counter {
      */
     fromJSON(data: any): void {
         for (let p of relevantProps) {
-            this[p] = data[p]
+            if (data[p] != null) {
+                this[p] = data[p]
+            }
         }
     }
 }

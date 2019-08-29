@@ -37,7 +37,7 @@ class Metrics {
             result[key] = []
 
             for (let counter of this.counters[key]) {
-                if (counter.endTime) {
+                if (counter.endTime != null) {
                     result[key].push(counter.toJSON())
                 }
             }
