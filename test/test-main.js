@@ -16,6 +16,7 @@ describe("Metrics Main Tests", function() {
     let setmeup = null
     let settings = null
     let destinationJson = `${__dirname}/metrics.json`
+    let counterLastData
 
     before(function() {
         let logger = require("anyhow")
@@ -55,6 +56,7 @@ describe("Metrics Main Tests", function() {
 
         let createIteratorWithData = function(i) {
             let mt = monitorado.start("iteratorWithData")
+            counterLastData = i
 
             let cb = function() {
                 mt.setData("counter", i)
@@ -107,9 +109,10 @@ describe("Metrics Main Tests", function() {
         setTimeout(cb, timeout)
     })
 
-    it("Auto expiring counters", function(done) {
+    it("Auto expiring counters, using date as tag", function(done) {
         let mt = monitorado.start("expiredCall", {
-            expiresIn: 50
+            expiresIn: 50,
+            tag: new Date()
         })
 
         let callback = function() {
@@ -217,7 +220,7 @@ describe("Metrics Main Tests", function() {
         }
     })
 
-    it("Output iteratorWithData has min / max data calculated", function(done) {
+    it("Output iteratorWithData has correct current / min / max data calculated", function(done) {
         let output = monitorado.output()
 
         if (!output.iteratorWithData.last_1min.data || !output.iteratorWithData.last_1min.data.counter) {
@@ -225,11 +228,14 @@ describe("Metrics Main Tests", function() {
             return
         }
 
+        let current = output.iteratorWithData.last_1min.data.counter.current
         let min = output.iteratorWithData.last_1min.data.counter.min
         let max = output.iteratorWithData.last_1min.data.counter.max
 
         if (min != 0 || max != 9) {
-            done(`Metrics output expects .data.counter min = 0 and max = 9, but got min ${min} and max ${max}.`)
+            done(`Output expects .data.counter min = 0 and max = 9, but got min ${min} and max ${max}.`)
+        } else if (counterLastData != current) {
+            done(`Output .data.counter.current should be ${counterLastData}, but got ${current}`)
         } else {
             done()
         }
@@ -362,6 +368,20 @@ describe("Metrics Main Tests", function() {
         done()
     })
 
+    it("Metrics cleanup respects the expireAfter", function(done) {
+        settings.expireAfter = 1000 * 60 * 60
+
+        countBefore = monitorado.get("iteratorWithData").length
+        monitorado.cleanup()
+        countAfter = monitorado.get("iteratorWithData").length
+
+        if (countBefore != countAfter) {
+            done("Cleanup should not have remoed any counters.")
+        } else {
+            done()
+        }
+    })
+
     it("Metrics cleanup (expireAfter set to 0)", function(done) {
         settings.expireAfter = 0
 
@@ -377,9 +397,11 @@ describe("Metrics Main Tests", function() {
     })
 
     it("Loads metrics from a JSON object", function(done) {
-        let data = JSON.parse(fs.readFileSync(destinationJson, {
-            encoding: "utf8"
-        }))
+        let data = JSON.parse(
+            fs.readFileSync(destinationJson, {
+                encoding: "utf8"
+            })
+        )
 
         monitorado.metrics.loadFrom(data)
 

@@ -1,8 +1,13 @@
 # Changelog for Monitorado
 
+1.3.0
+=====
+* Output data now also shows "current" (the last data value).
+* Updated dependencies.
+
 1.2.3
 =====
-* Fixed output that was including unfinished metrics in the calculations
+* Fixed output that was including unfinished metrics in the calculations.
 * Updated dependencies.
 
 1.2.2

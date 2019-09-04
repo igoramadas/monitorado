@@ -252,7 +252,7 @@ export class Output {
                 const value = _.map(data, key)
 
                 result.data[key] = {
-                    current: value[value.length - 1],
+                    current: value[0],
                     min: _.min(value),
                     max: _.max(value),
                     total: _.sum(value)
