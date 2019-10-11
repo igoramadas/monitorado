@@ -1,5 +1,9 @@
 # Changelog for Monitorado
 
+1.3.1
+=====
+* Updated dependencies.
+
 1.3.0
 =====
 * Output data now also shows "current" (the last data value).

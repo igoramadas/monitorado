@@ -1,12 +1,8 @@
 {
     "name": "monitorado",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "description": "Monitorado, metrics for Node.js apps.",
-    "keywords": [
-        "monitorado",
-        "metrics",
-        "reports"
-    ],
+    "keywords": ["monitorado", "metrics", "reports"],
     "author": "Igor Ramadas <igor@devv.com>",
     "homepage": "https://monitorado.devv.com",
     "subdomain": "monitorado",
@@ -24,16 +20,16 @@
         "test": "make test-cover"
     },
     "dependencies": {
-        "anyhow": "^1.4.0",
-        "jaul": "^1.1.1",
+        "anyhow": "^1.4.1",
+        "jaul": "^1.1.2",
         "moment": "^2.24.0",
         "lodash": "^4.17.15",
-        "setmeup": "^1.3.0"
+        "setmeup": "^1.3.1"
     },
     "devDependencies": {
-        "@types/node": "^12.7.11",
+        "@types/node": "^12.7.12",
         "chai": "^4.2.0",
-        "coveralls": "^3.0.6",
+        "coveralls": "^3.0.7",
         "get-port": "^5.0.0",
         "express": "^4.17.1",
         "nyc": "^14.1.1",
@@ -41,7 +37,7 @@
         "mocha-lcov-reporter": "^1.3.0",
         "supertest": "^4.0.2",
         "typedoc": "^0.15.0",
-        "typescript": "^3.6.3"
+        "typescript": "^3.6.4"
     },
     "nyc": {
         "reporter": "lcov",
