@@ -1,8 +1,12 @@
 {
     "name": "monitorado",
-    "version": "1.3.1",
+    "version": "1.3.2",
     "description": "Monitorado, metrics for Node.js apps.",
-    "keywords": ["monitorado", "metrics", "reports"],
+    "keywords": [
+        "monitorado",
+        "metrics",
+        "reports"
+    ],
     "author": "Igor Ramadas <igor@devv.com>",
     "homepage": "https://monitorado.devv.com",
     "subdomain": "monitorado",
@@ -27,13 +31,13 @@
         "setmeup": "^1.3.1"
     },
     "devDependencies": {
-        "@types/node": "^12.7.12",
+        "@types/node": "^12.11.7",
         "chai": "^4.2.0",
         "coveralls": "^3.0.7",
         "get-port": "^5.0.0",
         "express": "^4.17.1",
         "nyc": "^14.1.1",
-        "mocha": "^6.2.1",
+        "mocha": "^6.2.2",
         "mocha-lcov-reporter": "^1.3.0",
         "supertest": "^4.0.2",
         "typedoc": "^0.15.0",

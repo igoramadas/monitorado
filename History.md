@@ -1,5 +1,11 @@
 # Changelog for Monitorado
 
+1.3.2
+=====
+* Cleanup successful logs are now logged as debug (as info before).
+* Default cleanup interval reduced from 20 to every 10 minutes.
+* Updated dependencies.
+
 1.3.1
 =====
 * Updated dependencies.
