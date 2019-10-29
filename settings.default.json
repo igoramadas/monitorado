@@ -8,7 +8,7 @@
         // Cleanup empty metrics (total calls = 0)?
         "cleanupEmpty": true,
         // Cleanup interval (in minutes).
-        "cleanupInterval": 20,
+        "cleanupInterval": 10,
         // Clear metrics older than 12 hours (value in minutes). Please note that this
         // value should be at least equal to the highest value of the `intervals` array.
         "expireAfter": 720,

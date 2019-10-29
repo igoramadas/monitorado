@@ -183,7 +183,7 @@ class Monitorado {
         }
 
         if (counter > 0 && keyCounter > 0) {
-            return logger.info("Monitorado.cleanup", `Expire after ${settings.expireAfter}`, `Removed ${counter} counters from ${keyCounter} keys.`)
+            return logger.debug("Monitorado.cleanup", `Expire after ${settings.expireAfter}`, `Removed ${counter} counters from ${keyCounter} keys.`)
         }
     }
 
