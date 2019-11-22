@@ -4,7 +4,7 @@ import { Output, OutputOptions } from "./output";
 declare class Monitorado {
     private static _instance;
     /** @hidden */
-    static readonly Instance: Monitorado;
+    static get Instance(): Monitorado;
     /**
      * Default Monitorado constructor. This will load settings from current
      * environment and setup the necessary timers.

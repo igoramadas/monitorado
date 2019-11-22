@@ -20,7 +20,7 @@ export declare class Output {
     /** The actual output results will be saved on this variable. */
     private result;
     /** Helper to get the [[result]] JSON. */
-    readonly json: any;
+    get json(): any;
     /**
      * Generate summary for the specified object and interval.
      * @options Output options.

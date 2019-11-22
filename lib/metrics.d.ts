@@ -2,7 +2,7 @@
 declare class Metrics {
     private static _instance;
     /** @hidden */
-    static readonly Instance: Metrics;
+    static get Instance(): Metrics;
     /** Key pair list that holds the actual counters. */
     counters: any;
     /**

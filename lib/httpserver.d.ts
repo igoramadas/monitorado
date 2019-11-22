@@ -7,7 +7,7 @@ import express = require("express");
 declare class HttpServer {
     private static _instance;
     /** @hidden */
-    static readonly Instance: HttpServer;
+    static get Instance(): HttpServer;
     /** The HTTP server created using Express. */
     server: any;
     /** The Express application, in case you want to add extra routes or middlewares. */
