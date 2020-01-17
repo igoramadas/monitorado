@@ -1,5 +1,9 @@
 # Changelog for Monitorado
 
+1.3.3
+=====
+* Updated dependencies.
+
 1.3.2
 =====
 * Cleanup successful logs are now logged as debug (as info before).
