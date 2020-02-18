@@ -1,5 +1,9 @@
 # Changelog for Monitorado
 
+1.4.0
+=====
+* TypeScript types are now exported with the library.
+
 1.3.3
 =====
 * Updated dependencies.
