@@ -1,11 +1,8 @@
 // Monitorado: counter.ts
 
-/** @hidden */
-const _ = require("lodash")
-/** @hidden */
-const logger = require("anyhow")
-/** @hidden */
-const moment = require("moment")
+import _ = require("lodash")
+import logger = require("anyhow")
+import moment = require("moment")
 
 /** List of counter properties that are relevant when exporting / importing. */
 const relevantProps = ["id", "startTime", "endTime", "duration", "expired", "tag", "data", "error"]
@@ -54,7 +51,7 @@ export class Counter {
      * Start the counter with the specified options.
      * @param options Additional options (expiresIn, tag, etc.).
      */
-    start(options?: CounterOptions): void {
+    start = (options?: CounterOptions): void => {
         this.startTime = moment().valueOf()
 
         // Append tag?
@@ -84,7 +81,7 @@ export class Counter {
      * Ends the counter for the specified metric, with an optional error..
      * @param error Optional error that ocurred while processing the metric.
      */
-    end(error?: any): void {
+    end = (error?: any): void => {
         if (this.expired) {
             logger.warn("Monitorado.end", `Metric ${this.id} started at ${this.startTime} has expired`)
             return
@@ -112,7 +109,7 @@ export class Counter {
      * @param key The data key or label.
      * @param value The data value.
      */
-    setData(key: string, value: any): void {
+    setData = (key: string, value: any): void => {
         if (!this.data) {
             this.data = {}
         }
@@ -123,7 +120,7 @@ export class Counter {
     /**
      * Get a JSON export of the counter that can be used to persist its data.
      */
-    toJSON(): any {
+    toJSON = (): any => {
         let result = {} as any
 
         for (let p of relevantProps) {
@@ -143,7 +140,7 @@ export class Counter {
      * Imports counter data from the specified JSON object.
      * @param data JSON object representing the data to be imported.
      */
-    fromJSON(data: any): void {
+    fromJSON = (data: any): void => {
         for (let p of relevantProps) {
             if (data[p] != null) {
                 this[p] = data[p]

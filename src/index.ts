@@ -2,18 +2,12 @@
 
 import {Counter, CounterOptions} from "./counter"
 import {Output, OutputOptions} from "./output"
+import _ = require("lodash")
+import logger = require("anyhow")
+import jaul = require("jaul")
+import moment = require("moment")
+import setmeup = require("setmeup")
 
-/** @hidden */
-const _ = require("lodash")
-/** @hidden */
-const logger = require("anyhow")
-/** @hidden */
-const jaul = require("jaul")
-/** @hidden */
-const moment = require("moment")
-/** @hidden */
-const setmeup = require("setmeup")
-/** @hidden */
 let settings
 
 /** Monitorado's main class. */
@@ -45,7 +39,7 @@ class Monitorado {
         this.cleanupTimer = setInterval(this.cleanup, settings.cleanupInterval * 60 * 1000)
 
         // Force get system info on init to properly count memory and load avg.
-        this.systemInfo = jaul.system.getInfo()
+        this.systemInfo = jaul.system.getInfo(null)
 
         // Make sure we have at least 1 interval defined.
         /* istanbul ignore next */
@@ -86,7 +80,7 @@ class Monitorado {
      * @param id ID of counters to be returned.
      * @returns Array of counters for the specified ID, or null if empty / invalid.
      */
-    get(id: string): Counter[] {
+    get = (id: string): Counter[] => {
         return this.metrics.counters[id]
     }
 
@@ -96,7 +90,7 @@ class Monitorado {
      * @param options Optional metric options to set a tag and expiry interval.
      * @returns Returns the counter object.
      */
-    start(id: string, options?: CounterOptions): Counter {
+    start = (id: string, options?: CounterOptions): Counter => {
         logger.debug("Monitorado.start", options)
 
         // If options passed as string, treat as the tag.
@@ -192,7 +186,7 @@ class Monitorado {
      * @param options Optional output settings.
      * @returns The metrics represented as a JSON object.
      */
-    output(options?: OutputOptions): Output {
+    output = (options?: OutputOptions): Output => {
         let output = new Output(options)
         return output.json
     }

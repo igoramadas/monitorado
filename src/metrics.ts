@@ -1,16 +1,11 @@
-import {Counter} from "./counter"
-
 // Monitorado: metrics.ts
 
-/** @hidden */
-const _ = require("lodash")
-/** @hidden */
-const fs = require("fs")
-/** @hidden */
-const logger = require("anyhow")
-/** @hidden */
-const setmeup = require("setmeup")
-/** @hidden */
+import {Counter} from "./counter"
+import _ = require("lodash")
+import fs = require("fs")
+import logger = require("anyhow")
+import setmeup = require("setmeup")
+
 let settings
 
 /** Metrics container. */

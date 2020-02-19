@@ -2,20 +2,13 @@
 
 import {Percentile} from "./percentile"
 import {Counter} from "./counter"
+import _ = require("lodash")
+import logger = require("anyhow")
+import jaul = require("jaul")
+import metrics = require("./metrics")
+import moment = require("moment")
+import setmeup = require("setmeup")
 
-/** @hidden */
-const _ = require("lodash")
-/** @hidden */
-const logger = require("anyhow")
-/** @hidden */
-const jaul = require("jaul")
-/** @hidden */
-const metrics = require("./metrics")
-/** @hidden */
-const moment = require("moment")
-/** @hidden */
-const setmeup = require("setmeup")
-/** @hidden */
 let settings
 
 /** Summary of counters for a specific metric.  */

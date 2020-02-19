@@ -1,15 +1,11 @@
 // Monitorado: httpserver.ts
 
 import {Output} from "./output"
+import _ = require("lodash")
 import express = require("express")
+import logger = require("anyhow")
+import setmeup = require("setmeup")
 
-/** @hidden */
-const _ = require("lodash")
-/** @hidden */
-const logger = require("anyhow")
-/** @hidden */
-const setmeup = require("setmeup")
-/** @hidden */
 let settings
 
 /**
@@ -37,7 +33,7 @@ class HttpServer {
     // --------------------------------------------------------------------------
 
     /** Create the Express application and starts a HTTP server to output metrics. */
-    start(): void {
+    start = (): void => {
         settings = setmeup.settings.monitorado
 
         if (this.server) {
@@ -69,7 +65,7 @@ class HttpServer {
     }
 
     /** Close the HTTP server and kill the Express app. */
-    kill(): void {
+    kill = (): void => {
         if (!this.server) {
             logger.warn("Monitorado.HttpServer.kill", "Not running")
             return
