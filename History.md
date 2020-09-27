@@ -1,5 +1,9 @@
 # Changelog for Monitorado
 
+1.4.3
+=====
+* Updated dependencies.
+
 1.4.2
 =====
 * Updated dependencies.
